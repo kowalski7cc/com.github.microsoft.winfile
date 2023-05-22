@@ -1,0 +1,15 @@
+{
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/flatpak/flatpak-builder/master/data/flatpak-manifest.schema.json": [
+      "winfile.yaml",
+    ]
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.hg/store/**": true,
+    ".flatpak/**": true,
+    "_build/**": true
+  }
+}

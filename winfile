@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+unset WINEPREFIX
+if [ -z ${XDG_DATA_HOME+x} ];
+then export WINEPREFIX="$HOME"/.local/share/winfile;
+else export WINEPREFIX="$XDG_DATA_HOME"/winfile;
+fi
+if [ ! -d $WINEPREFIX ] ; then
+   mkdir -p $WINEPREFIX
+fi
+export WINEDEBUG="-all"
+export WINEDLLOVERRIDES="mscoree=d;mshtml=d"
+export StartupWMClass="winfile.exe"
+exec wine64 /app/share/winfile/winfile.exe "$@"

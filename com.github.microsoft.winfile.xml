@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>com.github.microsoft.winfile</id>
+    <name>Windows File Manager</name>
+    <metadata_license>CC0-1.0</metadata_license>
+    <summary>Windows File Manager</summary>
+    <description>Windows File Manager</description>
+    <developer_name>Microsoft Corporation</developer_name>
+    <launchable type="desktop-id">com.github.microsoft.winfile.desktop</launchable>
+    <project_license>MIT</project_license>
+    <url type="homepage">https://github.com/microsoft/winfile</url>
+    <url type="bugtracker">https://github.com/microsoft/winfile/issues</url>
+    <url type="vcs-browser">https://github.com/microsoft/winfile</url>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_group>Utilities</project_group>
+    <screenshots>
+        <screenshot type="default">
+            <image>https://raw.githubusercontent.com/microsoft/winfile/master/winfilescreenshot.png</image>
+        </screenshot>
+    </screenshots>
+    <provides>
+        <binary>winfile</binary>
+    </provides>
+    <categories>
+        <category>System</category>
+        <category>FileManager</category>
+    </categories>
+    <keywords>
+        <keyword>files</keyword>
+        <keyword>file manager</keyword>
+    </keywords>
+    <recommends>
+        <control>keyboard</control>
+        <control>pointing</control>
+    </recommends>
+    <releases>
+        <release version="10.1.4.0" date="2020-06-16">
+            <description>
+                <p>June 2020: Cumulative release</p>
+                <p>This release includes a number of smaller changes over the recent many months.<br />
+                    This version (v10.1.4.0) has been released through the Microsoft Store and the
+                    binaries on Azure blobs (signed by Microsoft) have been updated. Chocolatey will
+                    be updated soon.</p>
+            </description>
+        </release>
+    </releases>
+</component>

@@ -1,0 +1,11 @@
+# Write a desktop file
+[Desktop Entry]
+Version=1.0
+Type=Application
+Exec=winfile
+Name=File Manager
+Comment=Access and organize files and folders.
+Icon=com.github.microsoft.winfile
+Categories=System;FileTools;FileManager;
+StartupWMClass=winfile.exe
+Terminal=false

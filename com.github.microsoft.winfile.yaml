@@ -1,0 +1,45 @@
+app-id: "com.github.microsoft.winfile"
+sdk: org.freedesktop.Sdk
+runtime: org.freedesktop.Platform
+base: org.winehq.Wine
+base-version: "stable-22.08"
+runtime-version: "22.08"
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --filesystem=host
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.mingw-w64
+inherit-extensions:
+  - org.winehq.Wine.DLLs
+command: winfile
+modules:
+  - name: winfile
+    sources:
+      - type: git
+        url: https://github.com/microsoft/winfile
+        branch: v10.1.4.0
+      - type: patch
+        path: mingw_variables.patch
+      - type: patch
+        path: mingw_compile.patch
+      - type: file
+        path: winfile
+      # - type: file
+      #   path: com.github.microsoft.winfile.png
+      - type: file
+        path: com.github.microsoft.winfile.desktop
+      - type: file
+        path: com.github.microsoft.winfile.xml
+    buildsystem: simple
+    build-options:
+      env:
+        C_INCLUDE_PATH: /usr/lib/sdk/mingw-w64/x86_64-w64-mingw32/include
+    build-commands:
+      - sed -i 's/$(TOOLCHAIN)g++ -o $@ $(OBJS) $(LIBS)/$(TOOLCHAIN)g++ -o $@ $(OBJS) $(LIBS) -static -static-libgcc -static-libstdc++/' GNUmakefile
+      - TOOLCHAIN=/usr/lib/sdk/mingw-w64/bin/x86_64-w64-mingw32- make
+      - install -Dm755 winfile.exe $FLATPAK_DEST/share/winfile/winfile.exe
+      - install -Dm755 winfile $FLATPAK_DEST/bin/winfile
+      - install -Dm644 winfile256.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/com.github.microsoft.winfile.png
+      - install -Dm644 com.github.microsoft.winfile.desktop $FLATPAK_DEST/share/applications/com.github.microsoft.winfile.desktop
+      - install -Dm644 com.github.microsoft.winfile.xml $FLATPAK_DEST/share/appdata/com.github.microsoft.winfile.xml
