@@ -2,8 +2,8 @@ app-id: "com.github.microsoft.winfile"
 sdk: org.freedesktop.Sdk
 runtime: org.freedesktop.Platform
 base: org.winehq.Wine
-base-version: "stable-22.08"
-runtime-version: "22.08"
+base-version: "stable-25.08"
+runtime-version: "25.08"
 finish-args:
   - --share=ipc
   - --socket=x11
@@ -18,11 +18,11 @@ modules:
     sources:
       - type: git
         url: https://github.com/microsoft/winfile
-        branch: v10.1.4.0
-      - type: patch
-        path: mingw_variables.patch
-      - type: patch
-        path: mingw_compile.patch
+        branch: v10.4.0.0
+      # - type: patch
+        # path: mingw_variables.patch
+      # - type: patch
+        # path: mingw_compile.patch
       - type: file
         path: winfile
       # - type: file
@@ -36,8 +36,21 @@ modules:
       env:
         C_INCLUDE_PATH: /usr/lib/sdk/mingw-w64/x86_64-w64-mingw32/include
     build-commands:
-      - sed -i 's/$(TOOLCHAIN)g++ -o $@ $(OBJS) $(LIBS)/$(TOOLCHAIN)g++ -o $@ $(OBJS) $(LIBS) -static -static-libgcc -static-libstdc++/' GNUmakefile
-      - TOOLCHAIN=/usr/lib/sdk/mingw-w64/bin/x86_64-w64-mingw32- make
+      - winemaker --lower-uppercase -I/usr/include/wine/windows .
+      - |
+        sed -i 's/static bDLLFail = FALSE;/static int bDLLFail = FALSE;/' src/wfdlgs2.c || true
+      - |
+        sed -i 's/(LPDWORD)dwMenuIDs/(UINT *)dwMenuIDs/g' src/wftree.c || true
+      - |
+        sed -i 's/#include "resize.h"/#include "Resize.h"/g' src/lang/*.dlg || true
+      - |
+        # Remove Linux-only linker flags (-z, relro/now) that are invalid for mingw ld
+        sed -i 's/-Wl,-z,relro,-z,now//g' GNUmakefile || true
+        sed -i 's/ -z[^ ]*//g' GNUmakefile || true
+      - |
+        # Sanitize resource files: remove stray backslashes before letters that windres may treat as invalid escapes
+        sed -i -E 's/\\([A-Za-z])/\1/g' src/lang/*.rc src/lang/*.dlg || true
+      - TOOLCHAIN=/usr/lib/sdk/mingw-w64/bin/x86_64-w64-mingw32-; make CC="${TOOLCHAIN}gcc" CXX="${TOOLCHAIN}g++" WINDRES="${TOOLCHAIN}windres" STRIP="${TOOLCHAIN}strip" LDFLAGS="-Wl,--enable-auto-import" all
       - install -Dm755 winfile.exe $FLATPAK_DEST/share/winfile/winfile.exe
       - install -Dm755 winfile $FLATPAK_DEST/bin/winfile
       - install -Dm644 winfile256.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/com.github.microsoft.winfile.png
