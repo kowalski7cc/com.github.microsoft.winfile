@@ -34,6 +34,19 @@
         <control>pointing</control>
     </recommends>
     <releases>
+        <release version="10.4.0.0" date="2025-02-22">
+            <description>
+                <p>This release includes changes from the past year. Highlights include:</p>
+                <ul>
+                    <li>New Korean translation</li>
+                    <li>Resizable dialogs in pt-PT</li>
+                    <li>Better preservation of display settings when opening a specified directory
+                        via command line</li>
+                    <li>Relative paths when opening a specified directory via command line</li>
+                    <li>Security related warnings and hardening</li>
+                </ul>
+            </description>
+        </release>
         <release version="10.1.4.0" date="2020-06-16">
             <description>
                 <p>June 2020: Cumulative release</p>

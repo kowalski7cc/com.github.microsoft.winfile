@@ -6,27 +6,22 @@ base-version: "stable-25.08"
 runtime-version: "25.08"
 finish-args:
   - --share=ipc
-  - --socket=x11
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --device=dri
   - --filesystem=host
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.mingw-w64
-inherit-extensions:
-  - org.winehq.Wine.DLLs
 command: winfile
 modules:
   - name: winfile
     sources:
       - type: git
-        url: https://github.com/microsoft/winfile
-        branch: v10.4.0.0
-      # - type: patch
-        # path: mingw_variables.patch
-      # - type: patch
-        # path: mingw_compile.patch
+        url: https://github.com/microsoft/winfile.git
+        tag: v10.4.0.0
+        commit: 63ec2cc425c666fe37193085b0528f8f63986e4d
       - type: file
         path: winfile
-      # - type: file
-      #   path: com.github.microsoft.winfile.png
       - type: file
         path: com.github.microsoft.winfile.desktop
       - type: file
@@ -35,22 +30,14 @@ modules:
     build-options:
       env:
         C_INCLUDE_PATH: /usr/lib/sdk/mingw-w64/x86_64-w64-mingw32/include
+      append-path: /usr/lib/sdk/mingw-w64/bin
+      append-ld-library-path: /usr/lib/sdk/mingw-w64/lib
+      cflags: -Wno-incompatible-pointer-types
     build-commands:
       - winemaker --lower-uppercase -I/usr/include/wine/windows .
-      - |
-        sed -i 's/static bDLLFail = FALSE;/static int bDLLFail = FALSE;/' src/wfdlgs2.c || true
-      - |
-        sed -i 's/(LPDWORD)dwMenuIDs/(UINT *)dwMenuIDs/g' src/wftree.c || true
-      - |
-        sed -i 's/#include "resize.h"/#include "Resize.h"/g' src/lang/*.dlg || true
-      - |
-        # Remove Linux-only linker flags (-z, relro/now) that are invalid for mingw ld
-        sed -i 's/-Wl,-z,relro,-z,now//g' GNUmakefile || true
-        sed -i 's/ -z[^ ]*//g' GNUmakefile || true
-      - |
-        # Sanitize resource files: remove stray backslashes before letters that windres may treat as invalid escapes
-        sed -i -E 's/\\([A-Za-z])/\1/g' src/lang/*.rc src/lang/*.dlg || true
-      - TOOLCHAIN=/usr/lib/sdk/mingw-w64/bin/x86_64-w64-mingw32-; make CC="${TOOLCHAIN}gcc" CXX="${TOOLCHAIN}g++" WINDRES="${TOOLCHAIN}windres" STRIP="${TOOLCHAIN}strip" LDFLAGS="-Wl,--enable-auto-import" all
+      - sed -i 's/static bDLLFail = FALSE;/static int bDLLFail = FALSE;/' src/wfdlgs2.c
+      - sed -i 's/#include "resize.h"/#include "Resize.h"/g' src/lang/*.dlg
+      - make CC="x86_64-w64-mingw32-gcc" CXX="x86_64-w64-mingw32-g++" WINDRES="x86_64-w64-mingw32-windres" -j$(nproc) CFLAGS="-Wno-incompatible-pointer-types -DUNICODE -DFASTMOVE -DSTRSAFE_NO_DEPRECATE -DWINVER=0x0600" LDFLAGS="-static -static-libgcc -static-libstdc++"
       - install -Dm755 winfile.exe $FLATPAK_DEST/share/winfile/winfile.exe
       - install -Dm755 winfile $FLATPAK_DEST/bin/winfile
       - install -Dm644 winfile256.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/com.github.microsoft.winfile.png
