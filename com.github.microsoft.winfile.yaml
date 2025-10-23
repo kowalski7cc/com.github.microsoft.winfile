@@ -25,7 +25,7 @@ modules:
       - type: file
         path: com.github.microsoft.winfile.desktop
       - type: file
-        path: com.github.microsoft.winfile.xml
+        path: com.github.microsoft.winfile.metainfo.xml
     buildsystem: simple
     build-options:
       env:
@@ -42,4 +42,4 @@ modules:
       - install -Dm755 winfile $FLATPAK_DEST/bin/winfile
       - install -Dm644 winfile256.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/com.github.microsoft.winfile.png
       - install -Dm644 com.github.microsoft.winfile.desktop $FLATPAK_DEST/share/applications/com.github.microsoft.winfile.desktop
-      - install -Dm644 com.github.microsoft.winfile.xml $FLATPAK_DEST/share/appdata/com.github.microsoft.winfile.xml
+      - install -Dm644 com.github.microsoft.winfile.metainfo.xml -t $FLATPAK_DEST/share/metainfo/

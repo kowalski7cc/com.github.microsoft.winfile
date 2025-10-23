@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>com.github.microsoft.winfile</id>
+    <name>Windows File Manager</name>
+    <metadata_license>CC0-1.0</metadata_license>
+    <summary>Windows File Manager</summary>
+    <description>
+        <p>Original Windows File Manager (winfile) with enhancements</p>
+    </description>
+    <developer>
+        <id>com.microsoft</id>
+        <name>Microsoft Corporation</name>
+    </developer>
+    <launchable type="desktop-id">com.github.microsoft.winfile.desktop</launchable>
+    <project_license>MIT</project_license>
+    <url type="homepage">https://github.com/microsoft/winfile</url>
+    <url type="bugtracker">https://github.com/microsoft/winfile/issues</url>
+    <url type="vcs-browser">https://github.com/microsoft/winfile</url>
+    <project_group>Utilities</project_group>
+    <screenshots>
+        <screenshot type="default">
+            <image>https://raw.githubusercontent.com/microsoft/winfile/master/winfilescreenshot.png</image>
+        </screenshot>
+    </screenshots>
+    <provides>
+        <binary>winfile</binary>
+    </provides>
+    <categories>
+        <category>System</category>
+        <category>FileManager</category>
+    </categories>
+    <keywords>
+        <keyword>files</keyword>
+        <keyword>file manager</keyword>
+    </keywords>
+    <recommends>
+        <control>keyboard</control>
+        <control>pointing</control>
+    </recommends>
+    <content_rating type="oars-1.1" />
+    <releases>
+        <release version="10.4.0.0" date="2025-02-22">
+            <description>
+                <p>This release includes changes from the past year. Highlights include:</p>
+                <ul>
+                    <li>New Korean translation</li>
+                    <li>Resizable dialogs in pt-PT</li>
+                    <li>Better preservation of display settings when opening a specified directory
+                        via command line</li>
+                    <li>Relative paths when opening a specified directory via command line</li>
+                    <li>Security related warnings and hardening</li>
+                </ul>
+            </description>
+        </release>
+        <release version="10.3.0.0" date="2024-03-25">
+            <description>
+                <p>March 2024: Cumulative Release</p>
+                <p>This release includes changes from the past year. Highlights include:</p>
+                <ul>
+                    <li>Ability to launch Administrator command prompt or Explorer in a directory</li>
+                    <li>More entries in the Goto dialog, and ability to Page Up/Page Down through
+                        the list</li>
+                    <li>Resizable dialogs throughout</li>
+                    <li>Symbolic links are visually distinguished using &lt;SYMLINK&gt;</li>
+                    <li>Translation improvements</li>
+                    <li>Can launch the Store version from the command line</li>
+                    <li>Refresh is more thorough</li>
+                    <li>Can specify an initial directory when opening Winfile</li>
+                    <li>Source and tooling improvements, including an ability to target Windows XP</li>
+                </ul>
+                <p>This version (v10.3.0.0) is released in four ways:</p>
+                <ul>
+                    <li>zip file attached here; Winfile_v10.3.0.0.zip</li>
+                    <li>Microsoft Store ("Windows File Manager");</li>
+                    <li>Chocolatey: choco install winfile</li>
+                    <li>winget install "Windows File Manager"</li>
+                </ul>
+            </description>
+        </release>
+        <release version="10.1.4.0" date="2020-04-06">
+            <description>
+                <p>June 2020: Cumulative release</p>
+                <p>This release includes a number of smaller changes over the recent many months.
+                    version (v10.1.4.0) has been released through the Microsoft Store and the
+                    binaries on Azure blobs (signed by Microsoft) have been updated. Chocolatey will
+                    be updated soon.</p>
+            </description>
+        </release>
+        <release version="10.0.1901.1" date="2019-01-7">
+            <p>Cumulative changes through early January 2019</p>
+            <ul>
+                <li>Fix issue #164: toolbar customizations are restored properly</li>
+                <li>Fix issue #192: calling convention for WNet function pointers</li>
+                <li>Fix issue #194: Stack overflow while building goto cache ...</li>
+                <li>Fix issue #198: Add missing Polish translations and fix original translation
+                    encoding</li>
+                <li>Old rc files are now available in master</li>
+                <li>Prepare and make initial submission for Microsoft Store release.</li>
+                <li>Fix overflow bug in wfdrives.c and uninitialized variable in wfcopy.c</li>
+                <li>New Feature: add ^w as short cut for windows close</li>
+            </ul>
+            <p>Corresponding Chocolately package submitted (not yet approved as of this writing).</p>
+        </release>
+        <release version="10.0.1806.1" date="2018-06-30">
+            <p>Cumulative changes through June 2018</p>
+            <p>See commit history for details.</p>
+        </release>
+        <release version="10.0.1805.1" date="2018-05-16">
+            <p>Winfile cumulative changes to date</p>
+        </release>
+        <release version="10.0.0.0" date="2018-11-01">
+            <p>WinFile v10.0 - Sharing 10 years of improvements</p>
+            <p>The master branch contains changes I have made since 2007. The changes have been
+                solely determined by my needs and
+                personal use. Some of the changes have limitations that fit the way I use the tool.
+                For example, the path index
+                which supports the new goto command only contains information for the c: drive.</p>
+            <p>I have also not redesigned or restructured WinFile in any major way.</p>
+            <p>Version v10.0 represents the entire set of changes from Nov. 2007 until this OSS
+                project was created. For changes
+                post v10.0, see the commit and release history.</p>
+            <p>In summary v10.0 has the following changes/new features compared to original_plus:</p>
+            <ul>
+                <li>OLE drag/drop support</li>
+                <li>control characters (e.g., ctrl+C) map to current short cut (e.g., ctrl+c ->
+                    copy) instead of changing drives
+                </li>
+                <li>cut (ctrl+X) followed by paste (ctrl+V) translates into a file move as one would
+                    expect</li>
+                <li>left and right arrows in the tree view expand and collapse folders like in the
+                    Explorer</li>
+                <li>added context menus in both panes</li>
+                <li>improved the means by which icons are displayed for files</li>
+                <li>F12 runs notepad or notepad++ on the selected file</li>
+                <li>moved the ini file location to %AppData%\Roaming\Microsoft\WinFile</li>
+                <li>File.Search can include a date which limits the files returned to those after
+                    the date provided; the output is
+                    also sorted by the date instead of by the name</li>
+                <li>File.Search includes an option as to whether to include sub-directories</li>
+                <li>ctrl+K starts a command shell (ConEmu if installed) in the current directory;
+                    shfit+ctrl+K starts an elevated
+                    command shell (cmd.exe only)</li>
+                <li>File.Goto (ctrl+G) enables one to type a few words of a path and get a list of
+                    directories; selecting one
+                    changes to that directory. Only drive c: is indexed.</li>
+                <li>UI shows reparse points (e.g., Junction points) as such</li>
+                <li>added simple forward / back navigation (probably needs to be improved)</li>
+                <li>View command has a new option to sort by date forward (oldest on top); normal
+                    date sorting is newest on top</li>
+            </ul>
+            <p>You can read the code for more details.</p>
+        </release>
+        <release version="1.0.0.0" date="2018-04-05">
+            <p>Original Windows File Manager (winfile) runs on Windows again</p>
+        </release>
+    </releases>
+</component>
